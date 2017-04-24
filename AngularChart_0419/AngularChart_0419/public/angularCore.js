@@ -1,12 +1,20 @@
 ﻿var ctx = document.getElementById("myChart");
 var interval;
 var index = 0;
-var myChart;
 var myApp = angular.module('myApp', ['chart.js']);
+
 myApp.controller('myController', function ($scope, $http, $interval) {
     $scope.appName = 'Angular Chart';
     $scope.timerRunning = false;
     
+    $scope.chartList = [
+        { name: 'lineChart', diplayName: 'Line Chart', chartClass: 'chart chart-line' },
+        { name: 'pieChart', diplayName: 'Pie Chart', chartClass: 'chart chart-line'  },
+        { name: 'stackedBarChart', diplayName: 'Stacked Bar Chart', chartClass: 'chart chart-line'  }
+    ];
+    
+    /// $scope.chartClass = 'chart chart-line';
+
     $scope.labels = [0];
     $scope.data = [[0]];
     
@@ -51,5 +59,10 @@ myApp.controller('myController', function ($scope, $http, $interval) {
         });
         
         index++;
+    }
+
+    $scope.update = function () {
+        /// Select Chart and Change Chart Data
+        alert($scope.selectedChart.name);   
     }
 });

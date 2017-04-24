@@ -4,7 +4,7 @@ html
     title Angular Chart
     link(rel='stylesheet', href='css/bootstrap.min.css')
     script(src='http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js')
-    script(src='/chart/Chart.js')
+    script(src='/chart/Chart.min.js')
     script(src='/angular-chart/angular-chart.js')
     script(src='angularCore.js')
     style.
@@ -14,18 +14,17 @@ html
       position: absolute;
       height: 768px;
       width: 1024px;
-      }
+      }z
   body(ng-app='myApp', ng-controller='myController', style='margin: 20px 20px 20px 20px;')
     .well
       h1(align='center') {{appName}}
     .well
-      // <canvas id="line" class="chart chart-line" chart-data="chartData.data" chart-labels="chartData.labels" chart-click="chartData.onClick" chart-options="chartData.options" chart-y-axes="chartData.multiAxis" chart-legend="true"></canvas>
+      /// <canvas id="line" class="chart chart-line" chart-data="chartData.data" chart-labels="chartData.labels" chart-click="chartData.onClick" chart-options="chartData.options" chart-y-axes="chartData.multiAxis" chart-legend="true"></canvas>
+      /// canvas(chart-data='data', chart-labels='labels', style='height:500px;', ng-chart='chartClass')
       canvas.chart.chart-line(chart-data='data', chart-labels='labels', style='height:500px;')
+      /// canvas#myChart(style='height:500px;')
     .pull-left
-      select.form-control(name='chart')
-        option(value='lineChart') Line Chart
-        option(value='pieChart') Pie Chart
-        option(value='stackedBarChart') Stacked Bar Chart
+      select.form-control(name='chart', ng-init='selectedChart = chartList[0]', ng-model='selectedChart', ng-options='i.diplayName for i in chartList', ng-change='update()')
     .pull-right
-      button.btn.btn-primary.btn-md(ng-click='startDrawChart()', ng-disabled='timerRunning') Start
-      button.btn.btn-primary.btn-md(ng-click='stopDrawChart()', ng-disabled='!timerRunning') Stop
+      button.btn.btn-primary.btn-md(ng-click='startDrawChart()', ng-disabled='timerRunning', style='margin: 5px 5px 5px 5px;') Start
+      button.btn.btn-primary.btn-md(ng-click='stopDrawChart()', ng-disabled='!timerRunning', style='margin: 5px 5px 5px 5px;') Stop
