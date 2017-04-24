@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>Angular Chart</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+        <script src="/chart/Chart.js"></script>
+        <script src="/angular-chart/angular-chart.js"></script>
+        <script src="angularCore.js"></script>
+        <style>
+            body
+            {
+                font-family: TradeGothic, sans-serif;
+                position: absolute;
+                height: 768px;
+                width: 1024px;
+            }
+        </style>
+    </head>
+    <body ng-app="myApp" ng-controller="myController" style="margin: 20px 20px 20px 20px;">
+        <div class="well">
+            <h1 align="center">{{appName}}</h1>
+        </div>
+        <div class="well">
+            <!--<canvas id="line" class="chart chart-line" chart-data="chartData.data" chart-labels="chartData.labels" chart-click="chartData.onClick" chart-options="chartData.options" chart-y-axes="chartData.multiAxis" chart-legend="true"></canvas>-->
+            <canvas class="chart chart-line" chart-data="data" chart-labels="labels"  style="height:500px;"></canvas>
+        </div>
+        <div class="pull-left">
+            <select name="chart" class="form-control">
+                <option value="lineChart">Line Chart</option>
+                <option value="pieChart">Pie Chart</option>
+                <option value="stackedBarChart">Stacked Bar Chart</option>
+            </select>
+        </div>
+        <div class="pull-right">
+            <button class="btn btn-primary btn-md" ng-click="startDrawChart()" ng-disabled="timerRunning">Start</button>
+            <button class="btn btn-primary btn-md" ng-click="stopDrawChart()" ng-disabled="!timerRunning">Stop</button>
+        </div>
+        <script>
+           
+        </script>
+    </body>
+</html>
