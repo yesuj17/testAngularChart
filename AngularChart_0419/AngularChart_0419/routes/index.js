@@ -1,9 +1,11 @@
 ﻿module.exports = function (app, RealTimeChartData) { 
-    app.get('/', function (req, res) {
+    /// Default Get Code
+	app.get('/', function (req, res) {
         /// res.sendfile('./views/index.html');
         res.render('index');
     });
 
+	/// Post Code
     app.post('/api/realChart', function (req, res) {
         var realTimeChartData = new RealTimeChartData();
         realTimeChartData.label = req.body.label;
