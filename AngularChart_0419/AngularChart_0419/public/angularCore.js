@@ -1,10 +1,32 @@
-﻿var ctx = document.getElementById("myChart");
-var interval;
+﻿var interval;
 var index = 0;
 var myApp = angular.module('myApp', ['chart.js']);
+var canvas = document.getElementById('myChart'),
+    ctx = canvas.getContext('2d'),
+    startingData = {
+        labels: [0, 1],
+        datasets: [
+            {
+                label: "DataSet 1",
+                backgroundColor: "rgba(220, 220, 220, 0.5)",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                data: [0, 1]
+            }
+        ]
+    };
+
+var config = {
+    type: 'line',
+    data: startingData,
+};
+
+var myLiveChart = new Chart(ctx, config);
 
 myApp.controller('myController', function ($scope, $http, $interval) {
-    $scope.appName = 'Angular Chart';
+    $scope.appName = 'Chart JS';
     $scope.timerRunning = false;
     
     $scope.chartList = [
@@ -16,7 +38,7 @@ myApp.controller('myController', function ($scope, $http, $interval) {
     /// $scope.chartClass = 'chart chart-line';
 
     $scope.labels = [0];
-    $scope.data = [[0]];
+    $scope.data = [[0],[0]];
     
     /// Start Draw Chart
     $scope.startDrawChart = function () { 
@@ -49,10 +71,14 @@ myApp.controller('myController', function ($scope, $http, $interval) {
         /// Real Time Data Post
         $http.post('/api/realChart', realTimeData)
             .then(function (response) {
-            
             /// Refresh Real Time Chart
-            $scope.labels.push(response.data.label);
-            $scope.data[0].push(response.data.point);
+            /// $scope.labels.push(response.data.label);
+            /// $scope.data[0].push(response.data.point);
+            
+            config.data.datasets[0].data.push(response.data.point);
+            config.data.labels.push(response.data.label);
+            
+            myLiveChart.update();
         })
             .catch(function (response) {
             console.log("Fail");
@@ -63,6 +89,27 @@ myApp.controller('myController', function ($scope, $http, $interval) {
 
     $scope.update = function () {
         /// Select Chart and Change Chart Data
-        alert($scope.selectedChart.name);   
+        $scope.stopDrawChart();
+        if (myLiveChart) {
+            myLiveChart.destroy();
+        }
+
+        switch ($scope.selectedChart.name) {
+            case "lineChart":
+                config.type = 'line';
+                break;
+
+            case "pieChart":
+                config.type = 'pie';
+                break;
+
+            case "stackedBarChart":
+                config.type = 'bar';
+                config.options.scales.xAxes[0].stacked = true;
+                config.options.scales.yAxes[0].stacked = true;
+                break;
+        }
+        
+        myLiveChart = new Chart(ctx, config);
     }
 });
