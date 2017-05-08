@@ -32,7 +32,8 @@ myApp.controller('myController', function ($scope, $http, $interval) {
     $scope.chartList = [
         { name: 'lineChart', diplayName: 'Line Chart', chartClass: 'chart chart-line' },
         { name: 'pieChart', diplayName: 'Pie Chart', chartClass: 'chart chart-line'  },
-        { name: 'stackedBarChart', diplayName: 'Stacked Bar Chart', chartClass: 'chart chart-line'  }
+        { name: 'stackedBarChart', diplayName: 'Stacked Bar Chart', chartClass: 'chart chart-line' },
+        { name: 'gaugeChart', diplayName: 'Gauge Chart', chartClass: 'chart chart-line' }
     ];
     
     /// $scope.chartClass = 'chart chart-line';
@@ -107,6 +108,52 @@ myApp.controller('myController', function ($scope, $http, $interval) {
                 config.type = 'bar';
                 config.options.scales.xAxes[0].stacked = true;
                 config.options.scales.yAxes[0].stacked = true;
+                break;
+            case "gaugeChart":
+                /* Sample Code
+                config.type = 'doughnut';
+                config.data = {
+                    labels: ["Red", "Blue"],
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [12, 19],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                };
+
+                config.options = {
+                    rotation: 1 * Math.PI,
+                    circumference: 1 * Math.PI
+                };
+
+                Chart.pluginService.register({
+                    beforeDraw: function (chart) {
+                        var width = chart.chart.width,
+                            height = chart.chart.height,
+                            ctx = chart.chart.ctx;
+
+                        ctx.restore();
+                        var fontSize = (height / 114).toFixed(2);
+                        ctx.font = fontSize + "em sans-serif";
+                        ctx.textBaseline = "bottom";
+
+                        var text = "75%",
+                            textX = Math.round((width - ctx.measureText(text).width) / 2),
+                            textY = height;
+
+                        ctx.fillText(text, textX, textY);
+                        ctx.save();
+                    }
+                });
+                */
                 break;
         }
         
